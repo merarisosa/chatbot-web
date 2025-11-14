@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chatbot GAG</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>💼 Chatbot GAG</h2>
+    <p class="tagline">Tu asistente aduanal inteligente</p>
+  </div>
+
+  <button id="newChat">+ Nuevo chat</button>
+</aside>
+
+
+    <main class="chat-area">
+      <div id="chat-box" class="chat-box">
+        <div class="bot-msg fade-in">
+          👋 ¡Hola! Soy tu asistente aduanal.  
+          ¿En qué puedo ayudarte hoy?
+        </div>
+      </div>
+
+      <footer class="input-bar">
+        <input 
+          type="text" 
+          id="message" 
+          placeholder="Escribe tu mensaje aquí..." 
+          autocomplete="off"
+          onkeypress="if(event.key === 'Enter') sendMessage()" 
+        />
+        <button id="sendBtn" onclick="sendMessage()">➤</button>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+
+    async function sendMessage() {
+      const input = document.getElementById("message");
+      const msg = input.value.trim();
+      if (!msg) return;
+      input.value = "";
+
+      const userBubble = document.createElement("div");
+      userBubble.className = "user-msg fade-in";
+      userBubble.textContent = msg;
+      chatBox.appendChild(userBubble);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+        const res = await fetch("/chat/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: msg }),
+        });
+        const data = await res.json();
+
+        const botBubble = document.createElement("div");
+        botBubble.className = "bot-msg fade-in";
+        botBubble.textContent = data.reply || "No tengo respuesta en este momento 😅";
+        chatBox.appendChild(botBubble);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch (err) {
+        const errorBubble = document.createElement("div");
+        errorBubble.className = "bot-msg error fade-in";
+        errorBubble.textContent = "⚠️ Error de conexión con el servidor.";
+        chatBox.appendChild(errorBubble);
+      }
+    }
+
+    document.getElementById("newChat").addEventListener("click", () => {
+      chatBox.innerHTML = `<div class='bot-msg fade-in'>👋 Nuevo chat iniciado. ¿Cómo puedo ayudarte?</div>`;
+    });
+  </script>
+</body>
+</html>
