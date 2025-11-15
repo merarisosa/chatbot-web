@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-N8N_WEBHOOK_URL = os.getenv("https://hostinger.merrmsdev.work.gd/webhook/n8n")
+N8N_WEBHOOK_URL = os.getenv("WEBHOOK_N8N_URL")
 
 async def send_to_n8n(text: str) -> str:
     async with httpx.AsyncClient() as client:
