@@ -1,4 +1,4 @@
-#!/home/merari/Descargas/chatbot-web/venv/bin/python
+#!/Users/merarimaysosa/Downloads/chatbot-web/chatbot-web/venv/bin/python3.13
 # -*- coding: utf-8 -*-
 import re
 import sys
