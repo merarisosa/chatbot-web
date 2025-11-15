@@ -2,12 +2,13 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from app.routes import chat, validation
+from app.routes import chat, health, validation
 
 app = FastAPI(title="Chatbot Aduanal - Web")
 
 app.include_router(chat.router)
 app.include_router(validation.router)
+app.include_router(health.router, prefix="/api")
 
 # Montar estáticos y templates
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
