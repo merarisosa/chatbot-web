@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Panel Aduanal</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    .layout { display: flex; height: 100vh; }
+    .sidebar { width: 250px; background: #f4f4f4; padding: 20px; overflow-y: auto; }
+    .chat { flex: 1; display: flex; flex-direction: column; }
+    .messages { flex: 1; padding: 20px; overflow-y: auto; }
+    .input-box { display: flex; border-top: 1px solid #ccc; }
+    .input-box input { flex: 1; padding: 10px; border: none; outline: none; }
+    .input-box button { padding: 10px 20px; border: none; background: #5f81a7; color: white; cursor: pointer; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="layout">
+    <div class="sidebar">
+      <h3>📂 Documentos</h3>
+      <ul>
+        {% for doc in documentos %}
+          <li><a href="{{ doc.url }}" target="_blank">{{ doc.tipo }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="chat">
+      <div class="messages" id="chat">
+        <div><b>🤖:</b> Hola, ¿en qué puedo ayudarte hoy con el pedimento {{ pedimento }}?</div>
+      </div>
+      <div class="input-box">
+        <input id="userInput" placeholder="Escribe tu pregunta..." />
+        <button onclick="enviar()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function enviar() {
+      const input = document.getElementById('userInput');
+      const chat = document.getElementById('chat');
+      const msg = input.value;
+      chat.innerHTML += `<div><b>Tú:</b> ${msg}</div>`;
+      const res = await fetch('{{ CHATBOT_URL }}', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({pedimento: '{{ pedimento }}', mensaje: msg})
+      });
+      const data = await res.json();
+      chat.innerHTML += `<div><b>🤖:</b> ${data.respuesta}</div>`;
+      input.value = '';
+    }
+  </script>
+</body>
+</html>

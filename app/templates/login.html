@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/login.css">
+    <title>Grupo Aduanal Galván - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Grupo Aduanal Galván</h1>
+        <h2>Inicio de sesión</h2>
+        <form method="post" action="/login">
+            <input type="text" name="usuario" placeholder="Usuario" required>
+            <input type="password" name="contrasena" placeholder="Contraseña" required>
+            <button type="submit">Entrar</button>
+        </form>
+    {% if error %}
+        <p style="color: red; font-weight: 500; margin-top: 1rem;">{{ error }}</p>
+    {% endif %}
+
+        <div class="footer">© 2025 GAG Automation & AI</div>
+    </div>
+</body>
+</html>
