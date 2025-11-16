@@ -3,8 +3,11 @@ FROM python:3.12-slim
 
 # Define el directorio de trabajo
 WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Copia los archivos del proyecto
+COPY requirements.txt .
 COPY . .
 
 # Instala dependencias
