@@ -20,9 +20,18 @@ async def login_user(request: Request, usuario: str = Form(...), contrasena: str
     async with httpx.AsyncClient(timeout=10) as client:
         resp = await client.post(N8N_LOGIN_URL, json={"usuario": usuario, "contrasena": contrasena})
 
-    # Si el webhook responde con {"valid": true}
+    # Si el webhook responde con {"valid": true, "rfc": "MASM0103039C0" }
     if resp.status_code == 200 and resp.json().get("valid"):
-        return RedirectResponse(url="/validar", status_code=303)
+        data = resp.json()
+        rfc = data.get("rfc")
+        nombre_completo = data.get("nombre_completo")
+        usuario = data.get("usuario")
+        # Guardamos RFC y usuario en cookie
+        redirect = RedirectResponse(url="/validar", status_code=303)
+        redirect.set_cookie("nombre_completo", nombre_completo)
+        redirect.set_cookie("rfc", rfc)
+        redirect.set_cookie("usuario", usuario)
+        return redirect
 
     # Si no, mostrar error
     return templates.TemplateResponse(

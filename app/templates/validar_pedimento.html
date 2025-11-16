@@ -18,10 +18,20 @@
       </svg>
     </div>
 
+    {% if usuario %}
+        <p style="text-align:center; color:#5f81a7;">
+            Bienvenido, {{ nombre_completo }} ({{ rfc }})
+        </p>
+    {% endif %}
+
     <form method="post" action="/validar">
       <input type="text" name="pedimento" placeholder="Ej. 2585174450" required />
       <button type="submit">Validar</button>
     </form>
+    
+    {% if error %}
+        <p style="color: #c0392b; font-weight: 500; margin-top: 10px;">{{ error }}</p>
+    {% endif %}
   </div>
 </body>
 </html>
