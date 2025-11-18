@@ -1,21 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>Panel Aduanal</title>
+  <meta charset="UTF-8">
+  <title>Panel Aduanal - Grupo Aduanal Galván</title>
   <link rel="stylesheet" href="/static/styles.css">
   <style>
+    body { font-family: 'Inter', sans-serif; margin: 0; }
     .layout { display: flex; height: 100vh; }
-    .sidebar { width: 250px; background: #f4f4f4; padding: 20px; overflow-y: auto; }
-    .chat { flex: 1; display: flex; flex-direction: column; }
-    .messages { flex: 1; padding: 20px; overflow-y: auto; }
-    .input-box { display: flex; border-top: 1px solid #ccc; }
-    .input-box input { flex: 1; padding: 10px; border: none; outline: none; }
-    .input-box button { padding: 10px 20px; border: none; background: #5f81a7; color: white; cursor: pointer; }
+    .sidebar {
+      width: 260px; background: #f4f4f4; padding: 20px;
+      border-right: 1px solid #ddd; overflow-y: auto;
+    }
+    .sidebar h3 { color: #5f81a7; margin-bottom: 15px; }
+    .sidebar ul { list-style: none; padding: 0; }
+    .sidebar li { margin-bottom: 10px; }
+    .sidebar a { color: #333; text-decoration: none; }
+    .sidebar a:hover { color: #5f81a7; }
+    .chat { flex: 1; display: flex; flex-direction: column; background: #fff; }
+    .messages {
+      flex: 1; padding: 20px; overflow-y: auto; line-height: 1.6;
+      background: #fafafa; border-bottom: 1px solid #eee;
+    }
+    .messages div { margin-bottom: 8px; }
+    .input-box {
+      display: flex; border-top: 1px solid #ddd;
+      background: #fff; padding: 8px;
+    }
+    .input-box input {
+      flex: 1; padding: 10px; border: 1px solid #ccc;
+      border-radius: 6px; outline: none;
+    }
+    .input-box button {
+      margin-left: 8px; padding: 10px 20px; border: none;
+      background: #5f81a7; color: white; border-radius: 6px; cursor: pointer;
+    }
+    .header {
+      padding: 10px 20px; background: #5f81a7; color: white;
+      display: flex; justify-content: space-between; align-items: center;
+    }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 </head>
 <body>
+  <div class="header">
+    <h2>Hola, {{ nombre_completo }} 👋</h2>
+    <span>Pedimento: <b>{{ pedimento }}</b></span>
+  </div>
   <div class="layout">
     <div class="sidebar">
       <h3>📂 Documentos</h3>
@@ -27,7 +56,7 @@
     </div>
     <div class="chat">
       <div class="messages" id="chat">
-        <div><b>🤖:</b> Hola, ¿en qué puedo ayudarte hoy con el pedimento {{ pedimento }}?</div>
+        <div><b>🤖:</b> Hola {{ nombre_completo.split(' ')[0] }}, ¿en qué puedo ayudarte hoy con el pedimento <b>{{ pedimento }}</b>?</div>
       </div>
       <div class="input-box">
         <input id="userInput" placeholder="Escribe tu pregunta..." />
@@ -41,15 +70,17 @@
       const input = document.getElementById('userInput');
       const chat = document.getElementById('chat');
       const msg = input.value;
+      if (!msg.trim()) return;
       chat.innerHTML += `<div><b>Tú:</b> ${msg}</div>`;
       const res = await fetch('{{ CHATBOT_URL }}', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({pedimento: '{{ pedimento }}', mensaje: msg})
+        body: JSON.stringify({ pedimento: '{{ pedimento }}', mensaje: msg, session_id: '{{ session_id }}' })
       });
       const data = await res.json();
       chat.innerHTML += `<div><b>🤖:</b> ${data.respuesta}</div>`;
       input.value = '';
+      chat.scrollTop = chat.scrollHeight;
     }
   </script>
 </body>
