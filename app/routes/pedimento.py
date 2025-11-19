@@ -2,12 +2,12 @@ from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import httpx
-import os
+from app.core.config import settings
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
-N8N_VALIDAR_URL = os.getenv("N8N_VALIDAR_URL")
+N8N_VALIDAR_URL = settings.N8N_VALIDAR_URL
 
 @router.get("/validar", response_class=HTMLResponse)
 async def validar_page(request: Request):

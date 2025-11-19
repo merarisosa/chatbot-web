@@ -3,16 +3,15 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from app.models.schemas import ValidacionResponse
 from app.models.schemas import ReporteResponse
-from dotenv import load_dotenv
-load_dotenv()
+from app.core.config import settings
 
 # 🔧 Conexión a PostgreSQL
 conn = psycopg2.connect(
-    host=os.getenv("POSTGRES_HOST"),
-    port=os.getenv("POSTGRES_PORT"),
-    dbname=os.getenv("POSTGRES_DB"),
-    user=os.getenv("POSTGRES_USER"),
-    password=os.getenv("POSTGRES_PASSWORD")
+    host= settings.POSTGRES_HOST,
+          port=settings.POSTGRES_PORT,
+          dbname=settings.POSTGRES_DB,
+          user=settings.POSTGRES_USER,
+          password=settings.POSTGRES_PASSWORD
 )
 
 def generar_reporte(fecha_inicio: str, fecha_fin: str, tipo: str = "general"):

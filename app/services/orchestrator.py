@@ -1,10 +1,8 @@
 import httpx
-import os
-from dotenv import load_dotenv
+from app.core.config import settings
 
-load_dotenv()
 
-N8N_WEBHOOK_URL = os.getenv("WEBHOOK_N8N_URL")
+N8N_WEBHOOK_URL = settings.WEBHOOK_N8N_URL
 
 async def send_to_n8n(text: str) -> str:
     async with httpx.AsyncClient() as client:

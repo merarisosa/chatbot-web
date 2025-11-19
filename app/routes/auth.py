@@ -2,12 +2,12 @@ from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 import httpx
 from fastapi.templating import Jinja2Templates
-import os
+from app.core.config import settings
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
-N8N_LOGIN_URL = os.getenv("N8N_LOGIN_URL") 
+N8N_LOGIN_URL = settings.N8N_LOGIN_URL
 
 @router.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
