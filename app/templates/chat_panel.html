@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Aduanal - Grupo Aduanal Galván</title>
+  <link rel="stylesheet" href="/static/chat_panel.css">
+</head>
+<body>
+  <div class="header">
+    <h2>Hola, {{ nombre_completo }} 👋</h2> 
+    <span>Pedimento: <b>{{ pedimento }}</b></span>
+  </div>
+  <div class="layout">
+    <div class="sidebar">
+      <h3>📂 Documentos</h3>
+      <ul>
+        {% if documentos %}
+          {% for doc in documentos %}
+           <li><a href="{{ doc.url }}" target="_blank">{{ doc.tipo }}</a></li>
+          {% endfor %}
+        {% else %}
+          <li style="color:#888;">(No hay documentos disponibles)</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="chat">
+      <div class="messages" id="chat">
+        <div><b>🤖:</b> Hola {{ nombre_completo.split(' ')[0] }}, soy OlliBot</div>
+      </div>
+      <div class="input-box">
+        <input id="userInput" placeholder="Escribe tu pregunta..." />
+        <button onclick="enviar()">Enviar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CHATBOT_URL = "{{ CHATBOT_URL }}";
+    const PEDIMENTO = "{{ pedimento }}";
+    const SESSION_ID = "{{ session_id }}";
+
+    async function enviar() {
+      const input = document.getElementById('userInput');
+      const chat = document.getElementById('chat');
+      const msg = input.value;
+      if (!msg.trim()) return;
+
+      chat.innerHTML += `<div class="message user">${msg}</div>`
+
+      const res = await fetch(CHATBOT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pedimento: PEDIMENTO,
+          mensaje: msg,
+          session_id: SESSION_ID
+        })
+      });
+
+      const data = await res.json();
+      chat.innerHTML += `<div class="message bot">${data.respuesta}</div>`;
+      input.value = '';
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+</body>
+</html>

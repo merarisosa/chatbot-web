@@ -1,0 +1,175 @@
+/* 🎨 Estilos generales */
+body {
+  font-family: "Inter", "Poppins", sans-serif;
+  background-color: #f4f0eb;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h2, h3 {
+  color: #5f81a7;
+  text-align: center;
+}
+
+/* 🔐 LOGIN */
+.login-container {
+  width: 350px;
+  margin: 10% auto;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.login-container h2 {
+  margin-bottom: 24px;
+}
+
+.login-container input {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.login-container button {
+  width: 100%;
+  padding: 12px;
+  background: #5f81a7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.3s ease;
+}
+
+.login-container button:hover {
+  background: #4a6b8f;
+}
+
+/* 📦 VALIDAR PEDIMENTO */
+.search-container {
+  width: 450px;
+  margin: 12% auto;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.search-container button {
+  padding: 12px 20px;
+  background: #5f81a7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.search-container button:hover {
+  background: #4a6b8f;
+}
+
+/* 💬 PANEL DE CHAT */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #e9ecef;
+  padding: 20px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #5f81a7;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  background: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.sidebar li:hover {
+  background: #d8e3ef;
+}
+
+.sidebar a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* 🗨️ Chat principal */
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  font-size: 15px;
+}
+
+.messages div {
+  margin-bottom: 10px;
+}
+
+.input-box {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.input-box input {
+  flex: 1;
+  border: none;
+  padding: 15px;
+  font-size: 15px;
+  outline: none;
+}
+
+.input-box button {
+  background: #5f81a7;
+  color: white;
+  border: none;
+  padding: 0 25px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.input-box button:hover {
+  background: #4a6b8f;
+}

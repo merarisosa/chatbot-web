@@ -1,0 +1,87 @@
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f4f0eb;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: #ffffff;
+      padding: 3rem 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 380px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .card h1 {
+      color: #5f81a7;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .card h2 {
+      color: #5f81a7;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 1.8rem;
+    }
+
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .icon svg {
+      width: 26px;
+      height: 26px;
+      color: #5f81a7;
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem;
+      border: 2px solid #dcd2cc;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      text-align: center;
+      transition: border-color 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      border-color: #5f81a7;
+      box-shadow: 0 0 0 3px rgba(95, 129, 167, 0.2);
+    }
+
+    button {
+      width: 100%;
+      margin-top: 1.2rem;
+      background-color: #5f81a7;
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4b6c8d;
+    }
