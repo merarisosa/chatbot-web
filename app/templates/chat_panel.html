@@ -35,22 +35,34 @@
   </div>
 
   <script>
+    const CHATBOT_URL = "{{ CHATBOT_URL }}";
+    const PEDIMENTO = "{{ pedimento }}";
+    const SESSION_ID = "{{ session_id }}";
+
     async function enviar() {
       const input = document.getElementById('userInput');
       const chat = document.getElementById('chat');
       const msg = input.value;
       if (!msg.trim()) return;
+
       chat.innerHTML += `<div><b>Tú:</b> ${msg}</div>`;
-      const res = await fetch('{{ CHATBOT_URL }}', {
+
+      const res = await fetch(CHATBOT_URL, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ pedimento: '{{ pedimento }}', mensaje: msg, session_id: '{{ session_id }}' })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pedimento: PEDIMENTO,
+          mensaje: msg,
+          session_id: SESSION_ID
+        })
       });
+
       const data = await res.json();
       chat.innerHTML += `<div><b>🤖:</b> ${data.respuesta}</div>`;
       input.value = '';
       chat.scrollTop = chat.scrollHeight;
     }
+
   </script>
 </body>
 </html>
