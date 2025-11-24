@@ -21,11 +21,18 @@ jobs:
         key: ${{ secrets.VPS_KEY }}
         port: 22
         script: |
+          echo "📁 Entrando al proyecto"
           cd /root/chatbot-web
 
           echo "🔄 Actualizando repositorio..."
           git pull || { echo 'git pull failed'; exit 1; }
 
+          echo "📝 Regenerando archivo .env desde secrets"
+          echo "${{ secrets.ENV_FILE }}" > /root/chatbot-web/.env
+
+          echo "🔧 Aplicando permisos correctos"
+          chmod 600 /root/chatbot-web/.env
+          
           echo "🛑 Deteniendo contenedor anterior..."
           docker stop chatbot-web || true
 
