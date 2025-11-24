@@ -21,6 +21,27 @@ jobs:
         port: 22
         script: |
           cd /root/chatbot-web
-          git pull
-          docker compose -f docker-compose.dev.yml down || true
-          docker compose -f docker-compose.dev.yml up -d --build
+
+          echo "🔄 Actualizando repositorio..."
+          git pull || { echo 'git pull failed'; exit 1; }
+
+          echo "🛑 Deteniendo contenedor anterior..."
+          docker stop chatbot-web || true
+
+          echo "🧹 Eliminando contenedor viejo..."
+          docker rm chatbot-web || true
+
+          echo "🏗️ Construyendo nueva imagen Docker..."
+          docker build -t chatbot-web .
+
+          echo "🚀 Levantando contenedor nuevo..."
+          docker run -d \
+            --name chatbot-web \
+            -p 8010:8000 \
+            --env-file .env \
+            chatbot-web
+
+          echo "🔗 Conectando a red n8n_n8n-network..."
+          docker network connect n8n_n8n-network chatbot-web || true
+
+          echo "🎉 DEPLOY TERMINADO"
