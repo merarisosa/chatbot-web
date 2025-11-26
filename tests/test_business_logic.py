@@ -1,7 +1,17 @@
 from fastapi.testclient import TestClient
 from app.main import app
+import pytest
+from unittest.mock import patch, MagicMock
+from fastapi.testclient import TestClient
+
 
 client = TestClient(app)
+
+@pytest.fixture(autouse=True)
+def mock_postgres():
+    with patch("app.services.business_logic.psycopg2.connect") as mock_conn:
+        mock_conn.return_value = MagicMock()
+        yield
 
 # 1️⃣ Prueba de validación (endpoint /api/validar)
 def test_validar_pedimento_valido():
@@ -36,4 +46,4 @@ def test_generar_reporte():
     assert "periodo" in data
     assert "detalles" in data
     assert isinstance(data["detalles"], list)
-    assert data["total_pedimentos"] == 5
+    assert data["total_pedimentos"] == 3

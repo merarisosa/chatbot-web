@@ -1,7 +1,16 @@
 from dotenv import load_dotenv
 import os
+from pathlib import Path
 
-load_dotenv()
+# Detecta si existe .env-dev (modo desarrollo / tests)
+DEV_ENV = Path(".env-dev")
+
+if DEV_ENV.exists():
+    print("🔧 Cargando entorno de desarrollo (.env-dev)")
+    load_dotenv(".env-dev")
+else:
+    print("🚀 Cargando entorno de producción (.env)")
+    load_dotenv()
 
 class Settings:    
 
